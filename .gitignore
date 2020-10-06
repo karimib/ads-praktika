@@ -1,0 +1,10 @@
+# Project exclude paths
+/.gradle/
+/base/build/
+/base/build/classes/java/main/
+/praktikum-01/build/
+/praktikum-01/build/classes/java/main/
+/praktikum-01/build/classes/java/test/
+/praktikum-02/build/
+/praktikum-02/build/classes/java/main/
+/praktikum-02/build/classes/java/test/

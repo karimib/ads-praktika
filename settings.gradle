@@ -1,0 +1,6 @@
+rootProject.name = 'ads-praktika'
+include 'praktikum-01'
+include 'praktikum-02'
+include 'base'
+include 'praktikum-03'
+
