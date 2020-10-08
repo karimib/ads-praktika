@@ -1,9 +1,12 @@
+import org.w3c.dom.CDATASection;
+
 import java.util.AbstractList;
+import java.util.List;
 import java.util.NoSuchElementException;
 
-public class MyList extends AbstractList {
+public class MyList<T extends Comparable<T>> extends AbstractList<T> implements List<T> {
 
-    private Node start;
+    private Node<T> start;
     private int size;
 
 
@@ -18,8 +21,8 @@ public class MyList extends AbstractList {
      * @return true if element successfully added. This implementation always returns true.
      */
     @Override
-    public boolean add(Object obj) {
-        Node node = new Node(obj);
+    public boolean add(T obj) {
+        Node<T> node = new Node(obj);
         if (isEmpty()) {
             start = node;
             start.next = node;
@@ -40,26 +43,18 @@ public class MyList extends AbstractList {
      * @return always true.
      */
     @Override
-    public boolean remove(Object obj) {
-        Node curr = start;
+    public boolean remove(T obj) {
+        Node<T> curr = start;
         if (isEmpty()) {
-            return false;
+            throw new NoSuchElementException();
         }
-        if (curr.data == obj || curr.data.equals(obj)) {
-            curr.prev.next = curr.next;
-            curr.next.prev = curr.prev;
-            start = curr.next;
-            --size;
-            if (isEmpty()) {
-                clear();
-            }
-            return true;
-        }
-        curr = curr.next;
         do {
             if (curr.data == obj || curr.data.equals(obj)) {
                 curr.prev.next = curr.next;
                 curr.next.prev = curr.prev;
+                if(curr == start) {
+                    start = start.next;
+                }
                 --size;
                 return true;
             }
@@ -75,14 +70,14 @@ public class MyList extends AbstractList {
      * @return the element at index if its found.
      */
     @Override
-    public Object get(int index) {
+    public T get(int index) {
         if (isEmpty()) {
             throw new NoSuchElementException();
         }
         if (index > size) {
             throw new IndexOutOfBoundsException();
         }
-        Node curr = start;
+        Node<T> curr = start;
         for (int i = 0; i < index; i++) {
             curr = curr.next;
         }
@@ -112,18 +107,18 @@ public class MyList extends AbstractList {
      * Clears the list.
      */
     public void clear() {
-        new MyList();
+        new MyList<T>();
     }
 
 
     /**
      * Auxilary node class holding the data (the lists entry) and pointers to the previous / next nodes.
      */
-    protected class Node {
+    protected class Node<T> {
 
-        protected Object data;
-        protected Node next;
-        protected Node prev;
+        protected T data;
+        protected Node<T> next;
+        protected Node<T> prev;
 
         public Node() {
             data = null;
@@ -132,18 +127,19 @@ public class MyList extends AbstractList {
         }
 
 
-        public Node(Object object) {
-            this.data = object;
+        public Node(T data) {
+            this.data = data;
             next = null;
             prev = null;
         }
 
 
-        public Node(Object object, Node prev, Node next) {
-            this.data = object;
+        public Node(T data, Node<T> prev, Node<T> next) {
+            this.data = data;
             this.prev = prev;
             this.next = next;
         }
     }
+
 
 }
