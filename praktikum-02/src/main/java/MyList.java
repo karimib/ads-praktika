@@ -1,10 +1,7 @@
-import org.w3c.dom.CDATASection;
-
 import java.util.AbstractList;
-import java.util.List;
 import java.util.NoSuchElementException;
 
-public class MyList<T extends Comparable<T>> extends AbstractList<T> implements List<T> {
+public class MyList<T extends Comparable<T>> extends AbstractList<T> {
 
     private Node<T> start;
     private int size;
@@ -42,11 +39,10 @@ public class MyList<T extends Comparable<T>> extends AbstractList<T> implements 
      * @param obj the object to be removed.
      * @return always true.
      */
-    @Override
     public boolean remove(T obj) {
         Node<T> curr = start;
         if (isEmpty()) {
-            throw new NoSuchElementException();
+            return false;
         }
         do {
             if (curr.data == obj || curr.data.equals(obj)) {
@@ -111,35 +107,7 @@ public class MyList<T extends Comparable<T>> extends AbstractList<T> implements 
     }
 
 
-    /**
-     * Auxilary node class holding the data (the lists entry) and pointers to the previous / next nodes.
-     */
-    protected class Node<T> {
 
-        protected T data;
-        protected Node<T> next;
-        protected Node<T> prev;
-
-        public Node() {
-            data = null;
-            next = null;
-            prev = null;
-        }
-
-
-        public Node(T data) {
-            this.data = data;
-            next = null;
-            prev = null;
-        }
-
-
-        public Node(T data, Node<T> prev, Node<T> next) {
-            this.data = data;
-            this.prev = prev;
-            this.next = next;
-        }
-    }
 
 
 }
