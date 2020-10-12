@@ -5,5 +5,8 @@
   </component>
   <component name="JavacSettings">
     <option name="DEPRECATION" value="false" />
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="ads-praktika.praktikum-03.main" options="--add-exports jdk.rmic/sun.tools.java=ALL-UNNAMED" />
+    </option>
   </component>
 </project>

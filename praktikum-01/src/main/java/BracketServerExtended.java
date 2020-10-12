@@ -1,5 +1,4 @@
 import java.util.AbstractMap;
-import java.util.HashMap;
 import java.util.Map;
 
 public class BracketServerExtended {
@@ -34,7 +33,7 @@ public class BracketServerExtended {
             if (chars.containsKey(c)) {
                 stack.push(c);
             } else if (chars.containsValue(c)) {
-                if (!stack.isEmpty() && chars.get(stack.peek(c))) {
+                if (!stack.isEmpty() && chars.get(stack.peek()).equals(c)) {
                     stack.pop();
                 } else {
                     return false;

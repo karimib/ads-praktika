@@ -2,34 +2,34 @@ plugins {
     id 'java'
 }
 
-group 'org.example'
+group 'ads-praktikum'
 version '1.0-SNAPSHOT'
 
-repositories {
-    mavenCentral()
-}
 
-dependencies {
-    testImplementation("junit:junit:4.13")
-}
-
-subprojects {
+allprojects {
     apply plugin: 'java'
-    group 'org.example'
+    group 'ads-praktikum'
     version '1.0-SNAPSHOT'
 
     repositories {
         mavenCentral()
+        jcenter()
     }
     dependencies {
-        testImplementation "junit:junit:4.13"
-        testImplementation("org.junit.jupiter:junit-jupiter-api:5.6.0")
-        testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
-        testCompileOnly("junit:junit:4.13")
-        testRuntimeOnly("org.junit.vintage:junit-vintage-engine")
+        testImplementation("junit:junit:4.13")
+        testCompile("junit:junit:4.13")
     }
     test {
         useJUnitPlatform()
     }
+}
+
+subprojects {
+    dependencies {
+        testImplementation project(":base")
+        testImplementation("org.junit.jupiter:junit-jupiter-api:5.6.0")
+        testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
+    }
+
 }
 

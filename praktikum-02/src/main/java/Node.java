@@ -1,7 +1,7 @@
 /**
  * Auxilary node class holding the data (the lists entry) and pointers to the previous / next nodes.
  */
-public class Node<T> {
+public class Node<T extends Comparable<T>> implements Comparable<T> {
 
     public T data;
     public Node<T> next;
@@ -49,5 +49,10 @@ public class Node<T> {
 
     public void setPrev(Node<T> prev) {
         this.prev = prev;
+    }
+
+    @Override
+    public int compareTo(T obj) {
+        return this.getData().compareTo((T) obj);
     }
 }
