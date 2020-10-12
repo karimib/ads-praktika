@@ -1,6 +1,7 @@
 import java.text.ParseException;
 import java.util.Comparator;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -8,13 +9,22 @@ import java.util.stream.Collectors;
 public class RankingServer {
 
     List<Competitor> competitorList;
+    List<Competitor> namedList;
+    AtomicInteger count = new AtomicInteger(1);
 
     public String execute(String command) throws Exception {
         competitorList = command.lines()
                 .map(mapToComp)
-                .sorted()
+                .sorted(Comparator.comparing(Competitor::getTime))
+                .peek(competitor -> competitor.setRank(count.getAndIncrement()))
                 .collect(Collectors.toList());
-        return competitorList.toString();
+
+
+        namedList = competitorList.stream()
+                .sorted(Comparator.comparing(Competitor::getName).thenComparing(Competitor::getJg))
+                .collect(Collectors.toList());
+
+        return namedList.toString();
     }
 
     private Function<String, Competitor> mapToComp = (line) -> {
@@ -33,4 +43,5 @@ public class RankingServer {
         }
         return competitor;
     };
+
 }
