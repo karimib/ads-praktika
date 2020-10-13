@@ -12,6 +12,11 @@ public class RankingServer {
     List<Competitor> namedList;
     AtomicInteger count = new AtomicInteger(1);
 
+    /**
+     * Produces a list sorted by rank (time) and a list sorted by name and birthyear.
+     * @throws Exception
+     */
+
     public String execute(String command) throws Exception {
         competitorList = command.lines()
                 .map(mapToComp)
@@ -26,6 +31,11 @@ public class RankingServer {
 
         return namedList.toString();
     }
+
+
+    /**
+     * Maps a line to a Competitor
+     */
 
     private Function<String, Competitor> mapToComp = (line) -> {
         String[] input = line.split(String.valueOf(';'));
