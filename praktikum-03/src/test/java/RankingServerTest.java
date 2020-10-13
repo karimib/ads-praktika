@@ -1,13 +1,8 @@
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import java.io.*;
 import java.nio.file.Path;
-import java.nio.file.Paths;
-
 import static java.nio.file.Paths.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 class RankingServerTest {
 
@@ -17,10 +12,6 @@ class RankingServerTest {
     @BeforeEach
     void setUp() {
         rankingServer = new RankingServer();
-    }
-
-    @AfterEach
-    void tearDown() {
     }
 
     @Test
