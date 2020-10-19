@@ -3,4 +3,5 @@ include 'base'
 include 'praktikum-01'
 include 'praktikum-02'
 include 'praktikum-03'
+include 'praktikum-04'
 
