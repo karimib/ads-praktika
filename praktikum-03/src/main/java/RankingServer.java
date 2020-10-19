@@ -1,3 +1,5 @@
+import org.w3c.dom.stylesheets.LinkStyle;
+
 import java.text.ParseException;
 import java.util.Comparator;
 import java.util.List;
@@ -9,32 +11,35 @@ import java.util.stream.Collectors;
 public class RankingServer {
 
     List<Competitor> competitorList;
+    List<Competitor> rankedList;
     List<Competitor> namedList;
-    AtomicInteger count = new AtomicInteger(1);
+    AtomicInteger count;
 
     /**
      * Produces a list sorted by rank (time) and a list sorted by name and birthyear.
-     * @throws Exception
      */
 
-    public String execute(String command) throws Exception {
+    public String execute(String command) {
+        count = new AtomicInteger(1);
+
         competitorList = command.lines()
                 .map(mapToComp)
+                .collect(Collectors.toUnmodifiableList());
+
+        rankedList = competitorList.stream()
                 .sorted(Comparator.comparing(Competitor::getTime))
                 .peek(competitor -> competitor.setRank(count.getAndIncrement()))
-                .collect(Collectors.toList());
-
+                .collect(Collectors.toUnmodifiableList());
 
         namedList = competitorList.stream()
                 .sorted(Comparator.comparing(Competitor::getName).thenComparing(Competitor::getJg))
-                .collect(Collectors.toList());
+                .collect(Collectors.toUnmodifiableList());
 
         return namedList.toString();
     }
 
-
     /**
-     * Maps a line to a Competitor
+     * Maps a line string to a competitor object
      */
 
     private Function<String, Competitor> mapToComp = (line) -> {
@@ -49,7 +54,7 @@ public class RankingServer {
                     input[4]
             );
         } catch (ParseException e) {
-            return null;
+            throw new RuntimeException("Parsing failed at: " + line);
         }
         return competitor;
     };
