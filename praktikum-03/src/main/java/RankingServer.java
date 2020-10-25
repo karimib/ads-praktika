@@ -8,7 +8,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 
-public class RankingServer {
+public class RankingServer implements CommandExecutor {
 
     List<Competitor> competitorList;
     List<Competitor> rankedList;

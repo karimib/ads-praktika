@@ -1,7 +1,7 @@
 import java.util.AbstractMap;
 import java.util.Map;
 
-public class BracketServer implements CommandExecutor {
+public class BracketServer {
 
     private ListStack<Character> stack;
 

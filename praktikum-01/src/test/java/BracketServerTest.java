@@ -10,10 +10,6 @@ public class BracketServerTest {
 		bs = new BracketServer();
 	}
 
-	private void test(String s, boolean b) {
-		assertEquals(s, b, bs.checkBrackets(s));
-	}
-	
 	@Test
 	public void testBracket() {
 		test(")",false);
@@ -24,6 +20,10 @@ public class BracketServerTest {
 		test("[])",false);
 		test("[(3 +3)* 35 +3]* {3 +2}",true) ;
 		test("[({3 +3)* 35} +3]* {3 +2}",false);
+	}
+
+	private void test(String s, boolean b) {
+		assertEquals(s, b, bs.checkBrackets(s));
 	}
 
 }

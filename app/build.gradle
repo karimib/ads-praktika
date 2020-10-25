@@ -1,0 +1,15 @@
+plugins {
+    id 'application'
+}
+
+application {
+    mainClassName = 'ExBox'
+}
+
+dependencies {
+    implementation project(':praktikum-01')
+    implementation project(':praktikum-02')
+    implementation project(':praktikum-03')
+    implementation project(':praktikum-04')
+}
+

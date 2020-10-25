@@ -6,7 +6,7 @@ group 'ads-praktikum'
 version '1.0-SNAPSHOT'
 
 
-allprojects {
+subprojects {
     apply plugin: 'java'
     group 'ads-praktikum'
     version '1.0-SNAPSHOT'
@@ -16,20 +16,14 @@ allprojects {
         jcenter()
     }
     dependencies {
+        implementation("junit:junit:4.13")
         testImplementation("junit:junit:4.13")
-        testCompile("junit:junit:4.13")
+        testRuntimeOnly("org.junit.platform:junit-platform-launcher:1.7.0")
+        testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.7.0")
+        testRuntimeOnly("org.junit.vintage:junit-vintage-engine:5.7.0")
     }
     test {
         useJUnitPlatform()
     }
-}
-
-subprojects {
-    dependencies {
-        testImplementation project(":base")
-        testImplementation("org.junit.jupiter:junit-jupiter-api:5.6.0")
-        testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
-    }
-
 }
 

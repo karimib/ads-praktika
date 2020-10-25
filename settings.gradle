@@ -1,5 +1,5 @@
 rootProject.name = 'praktika'
-include 'base'
+include 'app'
 include 'praktikum-01'
 include 'praktikum-02'
 include 'praktikum-03'
