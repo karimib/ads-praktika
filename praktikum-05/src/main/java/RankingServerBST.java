@@ -13,8 +13,12 @@ public class RankingServerBST implements CommandExecutor {
 
 	public String execute(String command) {
 		tree = new SortedBinaryTree<>();
+		CompetitorBSTVisitor<CompetitorBST> rankedByTime = new CompetitorBSTVisitor<>();
+		//Map input file lines to CompetitorBST objects and add them to the tree
 		command.lines().map(mapToComp).forEach(c -> tree.add(c));
-		return tree.printTree();
+		//Inorder traversal gives us Competitors ranked by time
+		tree.traversal().inorder(rankedByTime);
+		return rankedByTime.toString();
 	}
 
 	/**
@@ -37,5 +41,21 @@ public class RankingServerBST implements CommandExecutor {
 		}
 		return competitor;
 	};
+
+	class CompetitorBSTVisitor<T> implements Visitor<T> {
+		StringBuilder output;
+
+		CompetitorBSTVisitor() {
+			output = new StringBuilder();
+		}
+
+		public void visit(T s) {
+			output.append(s.toString());
+		}
+
+		public String toString() {
+			return output.toString();
+		}
+	}
 
 }

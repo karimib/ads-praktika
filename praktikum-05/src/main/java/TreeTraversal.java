@@ -22,7 +22,6 @@ public class TreeTraversal<T extends Comparable<T>> implements Traversal<T> {
 		postorder(root, vis);
 	}
 
-	@Override
 	public void levelorder(Visitor<T> vis) {
 		levelorder(root, vis);
 	}
