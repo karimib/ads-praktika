@@ -21,7 +21,7 @@ public class SortedBinaryTree<T extends Comparable<T>> implements Tree<T> {
     // find node to replace
     private TreeNode<T> findRepAt(TreeNode<T> node, TreeNode<T> rep) {
         if (node.right != null) {
-            node.right = findRepAt(node.right,rep);
+            node.right = findRepAt(node.right, rep);
         } else {
             rep.element = node.element;
             node = node.left;
@@ -30,7 +30,7 @@ public class SortedBinaryTree<T extends Comparable<T>> implements Tree<T> {
     }
 
     // remove node
-    private TreeNode<T> removeAt(TreeNode<T> node, T x,TreeNode<T> removed ) {
+    private TreeNode<T> removeAt(TreeNode<T> node, T x, TreeNode<T> removed) {
         if (node == null) {
             return null;
         } else {
@@ -42,7 +42,7 @@ public class SortedBinaryTree<T extends Comparable<T>> implements Tree<T> {
                 } else if (node.right == null) {
                     node = node.left;
                 } else {
-                    node.left = findRepAt(node.left,node);
+                    node.left = findRepAt(node.left, node);
                 }
             } else if (x.compareTo(node.element) < 0) {
                 // search left
@@ -67,16 +67,19 @@ public class SortedBinaryTree<T extends Comparable<T>> implements Tree<T> {
     }
 
     public Traversal<T> traversal() {
-        // to be implemented
+        return new TreeTraversal<>(root);
     }
 
     protected int calcHeight(TreeNode<T> node) {
-        // to be implemented
+        if (node == null) {
+            return 0;
+        }
+        return Math.max(calcHeight(root.left), calcHeight(root.right) + 1);
     }
 
 
     protected int calcSize(TreeNode p) {
-        // to be implemented
+        return p.count;
     }
 
     public int height() {
@@ -95,11 +98,11 @@ public class SortedBinaryTree<T extends Comparable<T>> implements Tree<T> {
     public String printTree() {
         StringBuilder out = new StringBuilder();
         if (root.right != null) {
-            printTree(root.right,out, true, "");
+            printTree(root.right, out, true, "");
         }
-        out.append(root.element+"\n");
+        out.append(root.element + "\n");
         if (root.left != null) {
-            printTree(root.left,out, false, "");
+            printTree(root.left, out, false, "");
         }
         return out.toString();
     }
@@ -116,7 +119,7 @@ public class SortedBinaryTree<T extends Comparable<T>> implements Tree<T> {
             out.append(" \\");
         }
         out.append("----- ");
-        out.append(node.element+"\n");
+        out.append(node.element + "\n");
         if (node.left != null) {
             printTree(node.left, out, false,
                     indent + (isRight ? " |      " : "        "));
