@@ -2,10 +2,10 @@
 /.gradle/
 /base/build/
 /base/build/classes/java/main/
-/praktikum-01/build/
-/praktikum-01/build/classes/java/main/
-/praktikum-01/build/classes/java/test/
-/praktikum-02/build/
-/praktikum-02/build/classes/java/main/
-/praktikum-02/build/classes/java/test/
+/app/build/
+/app/build/classes/java/main/
+/app/build/classes/java/test/
+/praktikum-*/build/
+/praktikum-*/build/classes/java/main/
+/praktikum-*/build/classes/java/test/
 /.idea
