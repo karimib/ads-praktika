@@ -4,6 +4,9 @@ import org.junit.jupiter.api.Test;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 
 class RankingServerBSTTest {
 
@@ -18,9 +21,10 @@ class RankingServerBSTTest {
 	}
 
 	@Test
-	void testExecute() {
+	void testCorrectRanking() {
 		String result = server.execute(data);
-		System.out.println(result);
+		assertTrue(result.startsWith("0 Kiptum Daniel 1978 02:11:31.1\n"));
+		assertTrue(result.endsWith("0 Fessler Andreas 1962 05:33:39.1\n"));
 	}
 
 	private String prepareData() throws IOException {

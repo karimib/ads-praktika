@@ -5,7 +5,7 @@ import java.util.function.Function;
 
 public class RankingServerBST implements CommandExecutor {
 
-	SortedBinaryTree<CompetitorBST> tree;
+	private SortedBinaryTree<CompetitorBST> tree;
 
 	/**
 	 * Produces a list sorted by rank (time) and a list sorted by name and birthyear.
@@ -42,6 +42,9 @@ public class RankingServerBST implements CommandExecutor {
 		return competitor;
 	};
 
+	/**
+	 * Auxiliary visitor class
+	 */
 	class CompetitorBSTVisitor<T> implements Visitor<T> {
 		StringBuilder output;
 
