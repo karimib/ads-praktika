@@ -19,4 +19,5 @@ class TreeNode<T extends Comparable<T>> {
 	T getValue() {
 		return element;
 	}
+
 }

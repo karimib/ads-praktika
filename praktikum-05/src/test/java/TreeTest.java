@@ -1,7 +1,8 @@
-import org.junit.Test;
 import org.junit.Before;
+import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+
 
 public class TreeTest {
 	Tree<String> tree;
@@ -41,6 +42,21 @@ public class TreeTest {
 		Visitor<String> v = new MyVisitor<String>();
 		tree.traversal().levelorder(v);
 		assertEquals("levelorder", "BACD", v.toString());
+	}
+
+	@Test
+	public void testInterval() {
+		Visitor<String> v = new MyVisitor<String>();
+		tree.add("E");
+		tree.add("L");
+		tree.add("I");
+		tree.add("G");
+		tree.add("H");
+		tree.add("J");
+		tree.add("F");
+		tree.add("K");
+		tree.traversal().interval("C", "H", v);
+		assertEquals("interval", "CDEFGH", v.toString());
 	}
 }
 

@@ -11,4 +11,7 @@ public interface Traversal<T> {
 
 	/* traverse elements of tree in levelorder */
 	public void levelorder(Visitor<T> vistor);
+
+	/* traverse elements in a defined interval */
+	public void interval(Comparable<T> min, Comparable<T> max, Visitor<T> visitor);
 }

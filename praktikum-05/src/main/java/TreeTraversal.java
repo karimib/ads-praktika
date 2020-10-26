@@ -1,6 +1,5 @@
-import java.util.ArrayDeque;
-import java.util.PriorityQueue;
 import java.util.Queue;
+import java.util.ArrayDeque;
 
 public class TreeTraversal<T extends Comparable<T>> implements Traversal<T> {
 
@@ -9,23 +8,30 @@ public class TreeTraversal<T extends Comparable<T>> implements Traversal<T> {
 	public TreeTraversal(TreeNode<T> root) {
 		this.root = root;
 	}
-
-	public void inorder(Visitor<T> vis) {
-		inorder(root, vis);
+	@Override
+	public void inorder(Visitor<T> visitor) {
+		inorder(root, visitor);
 	}
 
-	public void preorder(Visitor<T> vis) {
-		preorder(root, vis);
+	@Override
+	public void preorder(Visitor<T> visitor) {
+		preorder(root, visitor);
 	}
 
-	public void postorder(Visitor<T> vis) {
-		postorder(root, vis);
+	@Override
+	public void postorder(Visitor<T> visitor) {
+		postorder(root, visitor);
 	}
 
-	public void levelorder(Visitor<T> vis) {
-		levelorder(root, vis);
+	@Override
+	public void levelorder(Visitor<T> visitor) {
+		levelorder(root, visitor);
 	}
 
+	@Override
+	public void interval(Comparable<T> min, Comparable<T> max, Visitor<T> visitor) {
+		interval(root, min, max,visitor);
+	}
 
 	private void inorder(TreeNode<T> node, Visitor<T> visitor) {
 		if (node != null) {
@@ -68,5 +74,18 @@ public class TreeTraversal<T extends Comparable<T>> implements Traversal<T> {
 		}
 	}
 
+	private void interval(TreeNode<T> node, Comparable<T> min, Comparable<T> max, Visitor<T> visitor) {
+		if(node != null) {
+			if(min.compareTo(node.getValue()) < 0) {
+				interval(node.left,min, max, visitor);
+			}
+			if(min.compareTo(node.getValue()) < 1 && max.compareTo(node.getValue()) > -1) {
+				visitor.visit(node.getValue());
+			}
+			if(max.compareTo(node.getValue()) > 0) {
+				interval(node.right,min, max, visitor);
+			}
+		}
+	}
 
 }
