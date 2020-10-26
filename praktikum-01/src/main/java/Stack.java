@@ -3,35 +3,35 @@
  */
 
 public interface Stack<T> {
-    /**
-     * Pushes the element on top of the stack.
-     *
-     * @param t
-     */
+	/**
+	 * Pushes the element on top of the stack.
+	 *
+	 * @param t
+	 */
 
-    void push(T t);
+	void push(T t);
 
-    /**
-     * Removes and returns the element on top of the stack.
-     *
-     * @return t
-     */
+	/**
+	 * Removes and returns the element on top of the stack.
+	 *
+	 * @return t
+	 */
 
-    T pop();
+	T pop();
 
-    /**
-     * Returns the element on top of the stack without removing it.
-     *
-     * @return t
-     */
+	/**
+	 * Returns the element on top of the stack without removing it.
+	 *
+	 * @return t
+	 */
 
-    T peek();
+	T peek();
 
-    /**
-     * Checks whether the stack is empty or not.
-     *
-     * @return true if stack is empty
-     */
+	/**
+	 * Checks whether the stack is empty or not.
+	 *
+	 * @return true if stack is empty
+	 */
 
-    boolean isEmpty();
+	boolean isEmpty();
 }

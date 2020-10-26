@@ -5,9 +5,9 @@
 
 public class ExBox {
 
-    public static void main(String[] args) throws Exception {
-        ExBoxFrame f = new ExBoxFrame();
-        f.setLocationRelativeTo(null);  
-        f.setVisible(true);
-    }
+	public static void main(String[] args) throws Exception {
+		ExBoxFrame f = new ExBoxFrame();
+		f.setLocationRelativeTo(null);
+		f.setVisible(true);
+	}
 }

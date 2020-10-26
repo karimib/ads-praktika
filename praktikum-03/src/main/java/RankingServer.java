@@ -10,53 +10,52 @@ import java.util.stream.Collectors;
 
 public class RankingServer implements CommandExecutor {
 
-    List<Competitor> competitorList;
-    List<Competitor> rankedList;
-    List<Competitor> namedList;
-    AtomicInteger count;
+	List<Competitor> competitorList;
+	List<Competitor> rankedList;
+	List<Competitor> namedList;
 
-    /**
-     * Produces a list sorted by rank (time) and a list sorted by name and birthyear.
-     */
+	/**
+	 * Produces a list sorted by rank (time) and a list sorted by name and birthyear.
+	 */
 
-    public String execute(String command) {
-        count = new AtomicInteger(1);
+	public String execute(String command) {
+		AtomicInteger count = new AtomicInteger(1);
 
-        competitorList = command.lines()
-                .map(mapToComp)
-                .collect(Collectors.toUnmodifiableList());
+		competitorList = command.lines()
+				.map(mapToComp)
+				.collect(Collectors.toUnmodifiableList());
 
-        rankedList = competitorList.stream()
-                .sorted(Comparator.comparing(Competitor::getTime))
-                .peek(competitor -> competitor.setRank(count.getAndIncrement()))
-                .collect(Collectors.toUnmodifiableList());
+		rankedList = competitorList.stream()
+				.sorted(Comparator.comparing(Competitor::getTime))
+				.peek(competitor -> competitor.setRank(count.incrementAndGet()))
+				.collect(Collectors.toUnmodifiableList());
 
-        namedList = competitorList.stream()
-                .sorted(Comparator.comparing(Competitor::getName).thenComparing(Competitor::getJg))
-                .collect(Collectors.toUnmodifiableList());
+		namedList = competitorList.stream()
+				.sorted(Comparator.comparing(Competitor::getName).thenComparing(Competitor::getJg))
+				.collect(Collectors.toUnmodifiableList());
 
-        return namedList.toString();
-    }
+		return namedList.toString();
+	}
 
-    /**
-     * Maps a line string to a competitor object
-     */
+	/**
+	 * Maps a line string to a competitor object
+	 */
 
-    private Function<String, Competitor> mapToComp = (line) -> {
-        String[] input = line.split(String.valueOf(';'));
-        Competitor competitor;
-        try {
-            competitor = new Competitor(
-                    Integer.parseInt(input[0]),
-                    input[1],
-                    Integer.parseInt(input[2]),
-                    input[3],
-                    input[4]
-            );
-        } catch (ParseException e) {
-            throw new RuntimeException("Parsing failed at: " + line);
-        }
-        return competitor;
-    };
+	private Function<String, Competitor> mapToComp = (line) -> {
+		String[] input = line.split(String.valueOf(';'));
+		Competitor competitor;
+		try {
+			competitor = new Competitor(
+					Integer.parseInt(input[0]),
+					input[1],
+					Integer.parseInt(input[2]),
+					input[3],
+					input[4]
+			);
+		} catch (ParseException e) {
+			throw new RuntimeException("Parsing failed at: " + line);
+		}
+		return competitor;
+	};
 
 }

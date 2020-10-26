@@ -12,27 +12,28 @@ import java.io.*;
  */
 class MyClassLoader extends ClassLoader {
 	private String path;
-    
+
 	MyClassLoader(ClassLoader parent) {
 		super(parent);
 	}
-    
+
 	private byte[] getBytes(String name) {
 		try {
 			RandomAccessFile file = new RandomAccessFile(name, "r");
 			byte data[] = new byte[(int) file.length()];
-			file.readFully(data);	
+			file.readFully(data);
 			file.close();
 			return data;
-		} catch (IOException e) {}
+		} catch (IOException e) {
+		}
 		return null;
 	}
 
-    /**
-     * @name filename of class
-     */
+	/**
+	 * @name filename of class
+	 */
 	public Class<?> loadClass(String name, boolean resolve) throws ClassNotFoundException {
-	    // System.out.println("load:" + name + " " + resolve);
+		// System.out.println("load:" + name + " " + resolve);
 		Class<?> clazz;
 		byte[] classData = getBytes(name);
 		if (classData != null) {
@@ -47,20 +48,20 @@ class MyClassLoader extends ClassLoader {
 				return defineClass(classData, 0, classData.length);
 			}
 		}
-		return findSystemClass(name);	
+		return findSystemClass(name);
 	}
 }
 
 
 public class ServerFactory {
-	
-	public static Class<?> loadClass(String name)  throws Exception {
+
+	public static Class<?> loadClass(String name) throws Exception {
 		MyClassLoader myClassLoader = new MyClassLoader(
 				MyClassLoader.class.getClassLoader());
 		Class<?> clazz = myClassLoader.loadClass(name, true);
 		return clazz;
 	}
-	
+
 	public static CommandExecutor createServer(String name) throws Exception {
 		return (CommandExecutor) loadClass(name).newInstance();
 	}

@@ -1,5 +1,5 @@
 plugins {
-    id 'java'
+	id 'java'
 }
 
 group 'ads-praktikum'
@@ -7,23 +7,23 @@ version '1.0-SNAPSHOT'
 
 
 subprojects {
-    apply plugin: 'java'
-    group 'ads-praktikum'
-    version '1.0-SNAPSHOT'
+	apply plugin: 'java'
+	group 'ads-praktikum'
+	version '1.0-SNAPSHOT'
 
-    repositories {
-        mavenCentral()
-        jcenter()
-    }
-    dependencies {
-        implementation("junit:junit:4.13")
-        testImplementation("junit:junit:4.13")
-        testImplementation("org.junit.platform:junit-platform-launcher:1.7.0")
-        testImplementation("org.junit.jupiter:junit-jupiter-engine:5.7.0")
-        testImplementation("org.junit.vintage:junit-vintage-engine:5.7.0")
-    }
-    test {
-        useJUnitPlatform()
-    }
+	repositories {
+		mavenCentral()
+		jcenter()
+	}
+	dependencies {
+		implementation("junit:junit:4.13")
+		testImplementation("junit:junit:4.13")
+		testImplementation("org.junit.platform:junit-platform-launcher:1.7.0")
+		testImplementation("org.junit.jupiter:junit-jupiter-engine:5.7.0")
+		testImplementation("org.junit.vintage:junit-vintage-engine:5.7.0")
+	}
+	test {
+		useJUnitPlatform()
+	}
 }
 
