@@ -1,8 +1,19 @@
 rootProject.name = 'praktika'
+
+
+File modules = file('praktikum-*')
+if (modules.isDirectory()) {
+    modules.eachDir { dir ->
+        String subProjectName = ":${dir.name}"
+        include(subProjectName)
+        project(subProjectName).projectDir = dir
+    }
+}
 include 'app'
 include 'praktikum-01'
 include 'praktikum-02'
 include 'praktikum-03'
 include 'praktikum-04'
 include 'praktikum-05'
+include 'praktikum-06'
 

@@ -1,6 +1,6 @@
 public class TreeNode<T extends Comparable<T>> {
 	T element;
-	TreeNode left, right;
+	TreeNode<T> left, right;
 	int height;
 	int count;
 

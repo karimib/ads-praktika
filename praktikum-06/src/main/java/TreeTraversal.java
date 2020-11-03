@@ -1,5 +1,5 @@
-import java.util.Queue;
 import java.util.ArrayDeque;
+import java.util.Queue;
 
 public class TreeTraversal<T extends Comparable<T>> implements Traversal<T> {
 

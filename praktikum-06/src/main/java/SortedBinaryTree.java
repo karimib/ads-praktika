@@ -1,21 +1,48 @@
-public class SortedBinaryTree<T extends Comparable<T>> implements Tree<T> {
-	private TreeNode<T> root;
+import org.w3c.dom.Node;
 
-	private TreeNode<T> insertAt(TreeNode<T> node, T x) {
-		if (node == null) {
-			return new TreeNode<T>(x);
-		} else {
-			if (x.compareTo(node.element) <= 0) {
-				node.left = insertAt(node.left, x);
-			} else {
-				node.right = insertAt(node.right, x);
-			}
-			return node;
-		}
+import java.sql.PreparedStatement;
+
+public class SortedBinaryTree<T extends Comparable<T>> implements Tree<T> {
+	protected TreeNode<T> root;
+
+	@Override
+	public int height() {
+		return calcHeight(root);
 	}
 
+	@Override
+	public int size() {
+		return calcSize(root);
+	}
+
+	@Override
+	public boolean balanced() {
+		if(root == null) {
+			return false;
+		}
+		return Math.abs(calcHeight(root.left) - calcHeight(root.left)) < 2;
+	}
+
+	@Override
 	public void add(T x) {
 		root = insertAt(root, x);
+	}
+
+	@Override
+	public T remove(T x) {
+		TreeNode<T> removed = new TreeNode<T>(null);
+		root = removeAt(root, x, removed);
+		return removed.element;
+	}
+
+	@Override
+	public boolean isEmpty() {
+		return root == null;
+	}
+
+	@Override
+	public Traversal<T> traversal() {
+		return new TreeTraversal<>(root);
 	}
 
 	// find node to replace
@@ -29,7 +56,20 @@ public class SortedBinaryTree<T extends Comparable<T>> implements Tree<T> {
 		return node;
 	}
 
+	private TreeNode<T> insertAt(TreeNode<T> node, T x) {
+		if (node == null) {
+			return new TreeNode<T>(x);
+		} else {
+			if (x.compareTo(node.element) <= 0) {
+				node.left = insertAt(node.left, x);
+			} else {
+				node.right = insertAt(node.right, x);
+			}
+			return node;
+		}
+	}
 	// remove node
+
 	private TreeNode<T> removeAt(TreeNode<T> node, T x, TreeNode<T> removed) {
 		if (node == null) {
 			return null;
@@ -55,43 +95,20 @@ public class SortedBinaryTree<T extends Comparable<T>> implements Tree<T> {
 		}
 	}
 
-	public T remove(T x) {
-		TreeNode<T> removed = new TreeNode<T>(null);
-		root = removeAt(root, x, removed);
-		return removed.element;
-	}
 
-
-	public boolean isEmpty() {
-		return root == null;
-	}
-
-	public Traversal<T> traversal() {
-		return new TreeTraversal<>(root);
-	}
-
-	private int calcHeight(TreeNode<T> node) {
+	public int calcHeight(TreeNode<T> node) {
 		if (node == null) {
 			return 0;
 		}
-		return Math.max(calcHeight(root.left), calcHeight(root.right) + 1);
+		return Math.max(calcHeight(node.left), calcHeight(node.right)) + 1;
 	}
 
 
-	public int calcSize(TreeNode p) {
-		return p.count;
-	}
-
-	public int height() {
-		return calcHeight(root);
-	}
-
-	public int size() {
-		return calcSize(root);
-	}
-
-	public boolean balanced() {
-		throw new UnsupportedOperationException();
+	private int calcSize(TreeNode p) {
+		if(p == null) {
+			return 0;
+		}
+		return calcSize(p.right) + calcSize(p.left) + p.count;
 	}
 
 	// only for testing and debugging purposes: show the structure of the tree
