@@ -3,7 +3,7 @@ import org.w3c.dom.Node;
 import java.sql.PreparedStatement;
 
 public class SortedBinaryTree<T extends Comparable<T>> implements Tree<T> {
-	protected TreeNode<T> root;
+	private TreeNode<T> root;
 
 	@Override
 	public int height() {
@@ -96,7 +96,7 @@ public class SortedBinaryTree<T extends Comparable<T>> implements Tree<T> {
 	}
 
 
-	public int calcHeight(TreeNode<T> node) {
+	private int calcHeight(TreeNode<T> node) {
 		if (node == null) {
 			return 0;
 		}

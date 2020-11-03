@@ -45,8 +45,8 @@ public class RankingServerBST implements CommandExecutor {
 	/**
 	 * Auxiliary visitor class
 	 */
-	class CompetitorBSTVisitor<T> implements Visitor<T> {
-		StringBuilder output;
+	private static class CompetitorBSTVisitor<T> implements Visitor<T> {
+		private StringBuilder output;
 
 		CompetitorBSTVisitor() {
 			output = new StringBuilder();

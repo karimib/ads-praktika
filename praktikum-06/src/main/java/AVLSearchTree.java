@@ -1,5 +1,6 @@
 public class AVLSearchTree<T extends Comparable<T>> extends SortedBinaryTree<T> {
 
+	private TreeNode<T> root;
 	/**
 	 * Insert into the tree; duplicates are ignored.
 	 *

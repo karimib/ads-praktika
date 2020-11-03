@@ -11,7 +11,7 @@ import static org.junit.Assert.*;
 public class AVLSearchTreeTest {
     private AVLSearchTree<String> tree;
 
-    private void init(AVLSearchTree tree) {
+    private void init(AVLSearchTree<String> tree) {
         tree.add("E");
         tree.add("F");
         tree.add("G");
@@ -33,7 +33,6 @@ public class AVLSearchTreeTest {
     public void testInorder() {
         Visitor<String> v = new MyVisitor<String>();
         tree.traversal().inorder(v);
-        System.out.println(tree.printTree());
         assertEquals("ABCDEFGHJ", v.toString());
     }
 
@@ -41,7 +40,6 @@ public class AVLSearchTreeTest {
     public void testPreorder() {
         Visitor<String> v = new MyVisitor<String>();
         tree.traversal().preorder(v);
-        System.out.println(tree.printTree());
         assertEquals("FBADCEHGJ", v.toString());
     }
 
@@ -49,7 +47,6 @@ public class AVLSearchTreeTest {
     public void testPostorder() {
         Visitor<String> v = new MyVisitor<String>();
         tree.traversal().postorder(v);
-        System.out.println(tree.printTree());
         assertEquals( "ACEDBGJHF", v.toString());
     }
 
@@ -57,7 +54,6 @@ public class AVLSearchTreeTest {
     public void testLevelorder() {
         Visitor<String> v = new MyVisitor<String>();
         tree.traversal().levelorder(v);
-        System.out.println(tree.printTree());
         assertEquals( "FBHADGJCE", v.toString());
     }
 
@@ -120,20 +116,20 @@ public class AVLSearchTreeTest {
         tree.traversal().inorder(v);
         assertEquals(b.toString(), v.toString());
     }
-}
+    class MyVisitor<T> implements Visitor<T> {
+        private StringBuilder output;
 
-class MyVisitor<T> implements Visitor<T> {
-    private StringBuilder output;
+        MyVisitor() {
+            output = new StringBuilder();
+        }
 
-    MyVisitor() {
-        output = new StringBuilder();
+        public void visit(T s) {
+            output.append(s);
+        }
+
+        public String toString() {
+            return output.toString();
+        }
     }
 
-    public void visit(T s) {
-        output.append(s);
-    }
-
-    public String toString() {
-        return output.toString();
-    }
 }
