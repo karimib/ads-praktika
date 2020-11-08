@@ -5,7 +5,7 @@
       <map />
     </option>
   </component>
-  <component name="ExternalSystem" externalSystem="GRADLE" externalSystemModuleGroup="ads-praktikum" externalSystemModuleVersion="1.0-SNAPSHOT" linkedProjectId="praktika" linkedProjectPath="$MODULE_DIR$/../.." rootProjectPath="$MODULE_DIR$/../.." />
+  <component name="ExternalSystem" externalSystem="GRADLE" externalSystemModuleGroup="ads.praktika" externalSystemModuleVersion="1.0-SNAPSHOT" linkedProjectId="praktika" linkedProjectPath="$MODULE_DIR$/../.." rootProjectPath="$MODULE_DIR$/../.." />
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
     <content url="file://$MODULE_DIR$/../..">

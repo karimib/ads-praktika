@@ -3,7 +3,7 @@ import java.util.function.Function;
 
 public class RankingServerAVL<T> implements CommandExecutor {
 
-	private AVLSearchTree<CompetitorAVL> tree;
+	private AVLSearchTree<CompetitorBST> tree;
 
 	/**
 	 * Produces a list sorted by rank (time) and a list sorted by name and birthyear.
@@ -11,7 +11,7 @@ public class RankingServerAVL<T> implements CommandExecutor {
 
 	public String execute(String command) {
 		tree = new AVLSearchTree<>();
-		CompetitorAVLVisitor<CompetitorAVL> rankedByTime = new CompetitorAVLVisitor<>();
+		CompetitorAVLVisitor<CompetitorBST> rankedByTime = new CompetitorAVLVisitor<>();
 		//Map input file lines to CompetitorAVL objects and add them to the tree
 		command.lines().map(mapToComp).forEach(c -> tree.add(c));
 		//Inorder traversal gives us Competitors ranked by time
@@ -23,11 +23,11 @@ public class RankingServerAVL<T> implements CommandExecutor {
 	 * Maps a line string to a competitor object
 	 */
 
-	private Function<String, CompetitorAVL> mapToComp = (line) -> {
+	private final Function<String, CompetitorBST> mapToComp = (line) -> {
 		String[] input = line.split(String.valueOf(';'));
-		CompetitorAVL competitor;
+		CompetitorBST competitor;
 		try {
-			competitor = new CompetitorAVL(
+			competitor = new CompetitorBST(
 					Integer.parseInt(input[0]),
 					input[1],
 					Integer.parseInt(input[2]),
@@ -58,6 +58,5 @@ public class RankingServerAVL<T> implements CommandExecutor {
 			return output.toString();
 		}
 	}
-
 
 }

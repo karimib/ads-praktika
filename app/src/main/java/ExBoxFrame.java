@@ -148,7 +148,7 @@ public class ExBoxFrame extends JFrame implements ActionListener, ItemListener {
 		}
 		setFontSize((int) (11 * SCALE));
 		setSize(new Dimension((int) (400 * SCALE), (int) (400 * SCALE)));
-		setTitle("ch.zhaw.ads.ExBox");
+		setTitle("ExBox");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		initMenu();
 		initComponents();

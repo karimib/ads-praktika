@@ -1,5 +1,55 @@
 public class SortedBinaryTree<T extends Comparable<T>> implements Tree<T> {
-	private TreeNode<T> root;
+	protected TreeNode<T> root;
+
+	@Override
+	public int height() {
+		return calcHeight(root);
+	}
+
+	@Override
+	public boolean balanced() {
+		return balanced(root);
+	}
+
+	@Override
+	public int size() {
+		return calcSize(root);
+	}
+
+	@Override
+	public void add(T x) {
+		root = insertAt(root, x);
+	}
+
+	@Override
+	public T remove(T x) {
+		TreeNode<T> removed = new TreeNode<T>(null);
+		root = removeAt(root, x, removed);
+		return removed.element;
+	}
+
+	@Override
+	public boolean isEmpty() {
+		return root == null;
+	}
+
+	@Override
+	public Traversal<T> traversal() {
+		return new TreeTraversal<>(root);
+	}
+
+
+
+	// find node to replace
+	private TreeNode<T> findRepAt(TreeNode<T> node, TreeNode<T> rep) {
+		if (node.right != null) {
+			node.right = findRepAt(node.right, rep);
+		} else {
+			rep.element = node.element;
+			node = node.left;
+		}
+		return node;
+	}
 
 	private TreeNode<T> insertAt(TreeNode<T> node, T x) {
 		if (node == null) {
@@ -13,23 +63,8 @@ public class SortedBinaryTree<T extends Comparable<T>> implements Tree<T> {
 			return node;
 		}
 	}
-
-	public void add(T x) {
-		root = insertAt(root, x);
-	}
-
-	// find node to replace
-	private TreeNode<T> findRepAt(TreeNode<T> node, TreeNode<T> rep) {
-		if (node.right != null) {
-			node.right = findRepAt(node.right, rep);
-		} else {
-			rep.element = node.element;
-			node = node.left;
-		}
-		return node;
-	}
-
 	// remove node
+
 	private TreeNode<T> removeAt(TreeNode<T> node, T x, TreeNode<T> removed) {
 		if (node == null) {
 			return null;
@@ -55,43 +90,29 @@ public class SortedBinaryTree<T extends Comparable<T>> implements Tree<T> {
 		}
 	}
 
-	public T remove(T x) {
-		TreeNode<T> removed = new TreeNode<T>(null);
-		root = removeAt(root, x, removed);
-		return removed.element;
-	}
 
-
-	public boolean isEmpty() {
-		return root == null;
-	}
-
-	public Traversal<T> traversal() {
-		return new TreeTraversal<>(root);
-	}
-
-	private int calcHeight(TreeNode<T> node) {
+	public int calcHeight(TreeNode<T> node) {
 		if (node == null) {
 			return 0;
 		}
-		return Math.max(calcHeight(root.left), calcHeight(root.right) + 1);
+		return Math.max(calcHeight(node.left), calcHeight(node.right)) + 1;
 	}
 
 
-	public int calcSize(TreeNode p) {
-		return p.count;
+	public int calcSize(TreeNode<T> node) {
+		if(node == null) {
+			return 0;
+		}
+		return calcSize(node.left) + calcSize(node.right) + node.count;
 	}
 
-	public int height() {
-		return calcHeight(root);
-	}
-
-	public int size() {
-		return calcSize(root);
-	}
-
-	public boolean balanced() {
-		throw new UnsupportedOperationException();
+	private boolean balanced(TreeNode<T> node) {
+		if (node == null) {
+			return true;
+		} else {
+			return Math.abs(calcHeight(node.left) - calcHeight(node.right)) < 2
+					&& balanced(node.left) && balanced(node.right);
+		}
 	}
 
 	// only for testing and debugging purposes: show the structure of the tree

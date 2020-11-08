@@ -7,7 +7,6 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
-
 public class AVLSearchTreeTest {
     private AVLSearchTree<String> tree;
 
@@ -65,7 +64,7 @@ public class AVLSearchTreeTest {
     @Test
     public void testBalanced() {
         assertTrue(tree.balanced());
-        Tree<String>  tree2 = new AVLSearchTree<String>();
+        Tree<String>  tree2 = new AVLSearchTree<>();
         tree2.add("A");
         tree2.add("B");
         tree2.add("C");
@@ -75,7 +74,7 @@ public class AVLSearchTreeTest {
 
     @Test
     public void testRemove() {
-        tree = new AVLSearchTree<String>();
+        tree = new AVLSearchTree<>();
         init(tree);
         tree.remove("F");
         tree.remove("H");
@@ -108,7 +107,7 @@ public class AVLSearchTreeTest {
             }
         }
         assertTrue(tree.balanced());
-        assertEquals(tree.size(),list.size());
+        assertEquals(list.size(), tree.size());
         Collections.sort(list);
         StringBuilder b = new StringBuilder();
         for (String s : list) {b.append(s);};

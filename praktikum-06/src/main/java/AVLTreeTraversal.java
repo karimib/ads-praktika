@@ -13,7 +13,7 @@ public class AVLTreeTraversal<T extends Comparable<T>> implements Traversal<T> {
     private void inorder(TreeNode<T> node, Visitor<T> vis) {
         if (node != null) {
             inorder(node.left, vis);
-            for (int i=0; i < node.count; i++) vis.visit(node.element);
+            for (int i=0; i < node.count; i++) {vis.visit(node.element); }
             inorder(node.right, vis);
         }
     }
@@ -24,7 +24,7 @@ public class AVLTreeTraversal<T extends Comparable<T>> implements Traversal<T> {
 
     private void preorder(TreeNode<T> node, Visitor<T> vis) {
         if (node != null) {
-            for (int i=0; i < node.count; i++) vis.visit(node.element);
+            for (int i=0; i < node.count; i++) {vis.visit(node.element); }
             preorder(node.left, vis);
             preorder(node.right, vis);
         }
@@ -39,7 +39,7 @@ public class AVLTreeTraversal<T extends Comparable<T>> implements Traversal<T> {
         if (node != null) {
             postorder(node.left, vis);
             postorder(node.right, vis);
-            for (int i=0; i < node.count; i++) vis.visit(node.element);
+            for (int i=0; i < node.count; i++) {vis.visit(node.element);}
         }
     }
     @Override
@@ -54,7 +54,7 @@ public class AVLTreeTraversal<T extends Comparable<T>> implements Traversal<T> {
         }
         while (!q.isEmpty()) {
             node = q.poll();
-            for (int i=0; i < node.count; i++) visitor.visit(node.element);
+            for (int i=0; i < node.count; i++) {visitor.visit(node.element);}
             if (node.left != null) {
                 q.offer(node.left);
             }
