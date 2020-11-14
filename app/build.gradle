@@ -16,4 +16,5 @@ dependencies {
 	implementation project(':praktikum-04')
 	implementation project(':praktikum-05')
 	implementation project(':praktikum-06')
+	implementation project(':praktikum-07')
 }
