@@ -1,0 +1,4 @@
+dependencies {
+	implementation project(':praktikum-07')
+	testImplementation project(':praktikum-07')
+}
