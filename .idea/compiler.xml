@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true">
+        <outputRelativeToContentRoot value="true" />
+      </profile>
+    </annotationProcessing>
     <bytecodeTargetLevel target="11" />
   </component>
   <component name="JavacSettings">
     <option name="DEPRECATION" value="false" />
-    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="ads-praktika.praktikum-03.main" options="--add-exports jdk.rmic/sun.tools.java=ALL-UNNAMED" />
-    </option>
   </component>
 </project>

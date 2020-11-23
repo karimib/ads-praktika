@@ -7,7 +7,6 @@ import static org.junit.Assert.assertEquals;
 public class RouteServerTest {
 
 	private static String INPUT =
-			"Winterthur Zürich 25\n" +
 					"Zürich Bern 126\n" +
 					"Zürich Genf 277\n" +
 					"Zürich Luzern 54\n" +
@@ -19,6 +18,7 @@ public class RouteServerTest {
 					"Lugano Chur 152\n" +
 					"Chur Luzern 146\n" +
 					"Luzern Bern 97\n" +
+					"Winterthur Zürich 25\n" +
 					"Bern Berikon 102\n" +
 					"Luzern Berikon 41";
 
@@ -33,8 +33,6 @@ public class RouteServerTest {
 		assertEquals("Zürich", pathCities[1]);
 		assertEquals("Luzern", pathCities[2]);
 		assertEquals("Lugano", pathCities[3]);
-
-
 	}
 
 }

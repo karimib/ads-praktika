@@ -6,15 +6,3 @@ plugins {
 application {
 	mainClassName = 'ExBox'
 }
-
-dependencies {
-	implementation project(':common')
-	testImplementation project(':common')
-	implementation project(':praktikum-01')
-	implementation project(':praktikum-02')
-	implementation project(':praktikum-03')
-	implementation project(':praktikum-04')
-	implementation project(':praktikum-05')
-	implementation project(':praktikum-06')
-	implementation project(':praktikum-07')
-}

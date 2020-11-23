@@ -1,18 +1,14 @@
-import groovy.time.TimeCategory
-import org.gradle.api.tasks.testing.logging.TestExceptionFormat
-import org.gradle.api.tasks.testing.logging.TestLogEvent
-
-group 'ads.praktika'
-version '1.0-SNAPSHOT'
-
 subprojects {
 	apply plugin: 'java'
-	group 'ads.praktika'
 
 	repositories {
 		mavenCentral()
 		jcenter()
 	}
+
+	sourceCompatibility = JavaVersion.VERSION_11
+	targetCompatibility = JavaVersion.VERSION_11
+
 	dependencies {
 		implementation("junit:junit:4.13")
 		testImplementation("junit:junit:4.13")
@@ -24,49 +20,9 @@ subprojects {
 		useJUnitPlatform()
 	}
 
-	//source: https://gist.github.com/lwasyl/f5b2b4ebe9e348ebbd8ee4cb995f8362
-	tasks.withType(Test) {
-		testLogging {
-			// set options for log level LIFECYCLE
-			events TestLogEvent.FAILED,
-					TestLogEvent.PASSED,
-					TestLogEvent.SKIPPED,
-					TestLogEvent.STANDARD_OUT
-			exceptionFormat TestExceptionFormat.FULL
-			showExceptions true
-			showCauses true
-			showStackTraces true
-
-			// set options for log level DEBUG and INFO
-			debug {
-				events TestLogEvent.STARTED,
-						TestLogEvent.FAILED,
-						TestLogEvent.PASSED,
-						TestLogEvent.SKIPPED,
-						TestLogEvent.STANDARD_ERROR,
-						TestLogEvent.STANDARD_OUT
-				exceptionFormat TestExceptionFormat.FULL
-			}
-			info.events = debug.events
-			info.exceptionFormat = debug.exceptionFormat
-
-			afterSuite { desc, result ->
-				if (!desc.parent) { // will match the outermost suite
-					def output = "Results: ${result.resultType} " +
-							"(" +
-							"${result.testCount} tests, " +
-							"${result.successfulTestCount} successes, " +
-							"${result.failedTestCount} failures, " +
-							"${result.skippedTestCount} skipped" +
-							") " +
-							"in ${TimeCategory.minus(new Date(result.endTime), new Date(result.startTime))}"
-					def startItem = '|  ', endItem = '  |'
-					def repeatLength = startItem.length() + output.length() + endItem.length()
-					println('\n' + ('-' * repeatLength) + '\n' + startItem + output + endItem + '\n' + ('-' * repeatLength))
-				}
-			}
-		}
+	// all source files are encoded as UTF-8
+	tasks.withType(JavaCompile) {
+		options.encoding = 'UTF-8'
 	}
 }
-
 

@@ -10,7 +10,7 @@ public class BracketServerExtended {
 			new AbstractMap.SimpleEntry<>("(", ")"),
 			new AbstractMap.SimpleEntry<>("{", "}"),
 			new AbstractMap.SimpleEntry<>("*", "*"),
-			new AbstractMap.SimpleEntry<>("<*", "*>") //TODO:
+			new AbstractMap.SimpleEntry<>("<*", "*>")
 	);
 
 	public String execute(String s) {

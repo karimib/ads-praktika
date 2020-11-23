@@ -6,7 +6,7 @@ public class Node<E> {
 	protected List<E> edges; // Kanten
 
 	public Node() {
-		edges = new LinkedList<E>();
+		edges = new LinkedList<>();
 	}
 
 	public Node(String name) {

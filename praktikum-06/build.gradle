@@ -1,6 +1,0 @@
-dependencies {
-	implementation project(':common')
-	testImplementation project(':common')
-	implementation project(':praktikum-05')
-	testImplementation project(':praktikum-05')
-}

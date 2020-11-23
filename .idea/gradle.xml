@@ -9,12 +9,10 @@
         <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="gradleHome" value="/usr/local/Cellar/gradle/6.7/libexec" />
-        <option name="gradleJvm" value="11 (5)" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/common" />
             <option value="$PROJECT_DIR$/praktikum-01" />
             <option value="$PROJECT_DIR$/praktikum-02" />
             <option value="$PROJECT_DIR$/praktikum-03" />
@@ -22,6 +20,8 @@
             <option value="$PROJECT_DIR$/praktikum-05" />
             <option value="$PROJECT_DIR$/praktikum-06" />
             <option value="$PROJECT_DIR$/praktikum-07" />
+            <option value="$PROJECT_DIR$/praktikum-08" />
+            <option value="$PROJECT_DIR$/praktikum-09" />
           </set>
         </option>
       </GradleProjectSettings>

@@ -1,22 +1,15 @@
-rootProject.name = 'praktika'
+rootProject.name = file('.').toPath().fileName
 
-File modules = file('praktikum-*')
-if (modules.isDirectory()) {
-    modules.eachDir { dir ->
-        String subProjectName = ":${dir.name}"
-        include(subProjectName)
-        project(subProjectName).projectDir = dir
-    }
+// dynamically add sub-projects in praktika folder
+File praktikaDir = file('.');
+if (praktikaDir.isDirectory()) {
+	praktikaDir.eachDir { dir ->
+		if (dir.name.toString().contains('praktikum')) {
+			String subProjectName = ":${dir.name}"
+			include(subProjectName)
+			project(subProjectName).projectDir = dir
+		}
+	}
 }
 
-include 'app'
-include 'common'
-include 'praktikum-01'
-include 'praktikum-02'
-include 'praktikum-03'
-include 'praktikum-04'
-include 'praktikum-05'
-include 'praktikum-06'
-include 'praktikum-07'
-
-
+include('app')

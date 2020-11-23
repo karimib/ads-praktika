@@ -1,14 +1,9 @@
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Comparator;
 import java.util.Date;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
-public class Competitor implements Comparable<Competitor> {
+public class CompetitorBST implements Comparable<CompetitorBST> {
 	private int startNr;
 	private String name;
 	private int jg;
@@ -16,7 +11,7 @@ public class Competitor implements Comparable<Competitor> {
 	private long time;
 	private int rank;
 
-	public Competitor(int startNr, String name, int jg, String country, String time) throws ParseException {
+	public CompetitorBST(int startNr, String name, int jg, String country, String time) throws ParseException {
 		this.startNr = startNr;
 		this.name = name;
 		this.jg = jg;
@@ -65,8 +60,8 @@ public class Competitor implements Comparable<Competitor> {
 		return sb.toString();
 	}
 
-	@Override
-	public int compareTo(Competitor other) {
+	public int compareTo(CompetitorBST other) {
 		return Long.compare(this.time, other.time);
 	}
+
 }
