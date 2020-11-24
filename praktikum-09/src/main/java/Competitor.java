@@ -63,7 +63,8 @@ public class Competitor implements Comparable<Competitor> {
 
 	@Override
 	public int compareTo(Competitor other) {
-		return Long.compare(this.time, other.time);
+        if(equals(other)) return 0;
+        return Integer.compare(jg,other.jg);
 	}
 
 	@Override

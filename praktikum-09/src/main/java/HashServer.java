@@ -1,7 +1,9 @@
 import java.text.ParseException;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class HashServer implements CommandExecutor {
 
@@ -10,14 +12,13 @@ public class HashServer implements CommandExecutor {
 	@Override
 	public String execute(String command) throws Exception {
 		if (command.toUpperCase().startsWith("GET")) {
+		    return String.valueOf(map.get(command));
 		}
 		else {
 			command.lines().map(mapToComp).forEach(c -> map.put(c.hashCode(), c));
 		}
-		return command;
+		return "Added:\\n" + command;
 	}
-
-
 
 	private Function<String, Competitor> mapToComp = (line) -> {
 		String[] input = line.split(String.valueOf(';'));
