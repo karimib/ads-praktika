@@ -145,7 +145,7 @@ public class HashTest {
         Map<Town,Town> hashmap2 = new HashMap<>();
         for (int i = 0; i < 1000; i++) {
             Town c = towns.get((int)(Math.random()*towns.size()));
-            // System.out.println(""+ c);
+            System.out.println(""+ c);
             int op = (int)(Math.random()*2);
             switch (op) {
                 case 0 : hashmap.put(c,c); hashmap2.put(c,c); break;
@@ -161,7 +161,7 @@ public class HashTest {
     }
 
     @Test
-    public void testMixedWithOveflow() {
+    public void testMixedWithOverflow() {
         Map<Town,Town> hashmap = new MyHashtable<>(4);
         Map<Town,Town> hashmap2 = new HashMap<>();
         for (int i = 0; i < 1000; i++) {

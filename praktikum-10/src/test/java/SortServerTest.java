@@ -8,7 +8,7 @@ public class SortServerTest {
 	private static final String SELECTION = "SELECTION";
 	private static final String BUBBLE = "BUBBLE";
 	private static final String INSERTION = "INSERTION";
-	private static final int SIZE = 2000000;
+	private static final int SIZE = 10000;
 	SortServer sortServer;
 
 	@Test
@@ -70,12 +70,12 @@ public class SortServerTest {
 	}
 
 	private void measureTime(String algo, String input) throws Exception {
-		long end, start = System.currentTimeMillis();
 		int count = 0;
+		long end, start = System.currentTimeMillis();
 		do {
 			sortServer.execute(input);
-			count++;
 			end = System.currentTimeMillis();
+			count++;
 		} while (end - start < 1000);
 		System.out.println("algo= " + algo + " " + "time=" + (double) (end - start) / count);
 	}

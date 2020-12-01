@@ -1,30 +1,18 @@
+
 public class SortServer implements CommandExecutor {
 	private int[] data;
 
-	public String execute(String command) throws Exception {
+	private static final String SELECTION = "SELECTION";
+	private static final String BUBBLE = "BUBBLE";
+	private static final String INSERTION = "INSERTION";
+
+	public String execute(String command) {
 		String[] args = command.split("\\s");
 		data = args[1].lines().mapToInt(Integer::parseInt).toArray();
-		if (args[0] == "INSERTION") {
-			insertionSort(data);
-		}
-		if (args[0] == "BUBBLE") {
-			bubbleSort(data);
-		}
-		if (args[0] == "SELECTION") {
-			selectionSort(data);
-		}
+		if (args[0] == INSERTION) insertionSort(data);
+		if (args[0] == BUBBLE) bubbleSort(data);
+		if (args[0] ==  SELECTION) selectionSort(data);
 		return Boolean.toString(checkSorted(data));
-	}
-
-	private void measureTimeBubble(int[] in) {
-		long end, start = System.currentTimeMillis();
-		int count = 0;
-		do {
-			bubbleSort(in);
-			count++;
-			end = System.currentTimeMillis();
-		} while (end - start < 1000);
-		System.out.println("time=" + (double) (end - start) / count);
 	}
 
 	private void bubbleSort(int[] array) {
@@ -57,13 +45,9 @@ public class SortServer implements CommandExecutor {
 		for (int i = 0; i < array.length - 1; i++) {
 			int index = i;
 			for (int j = i + 1; j < array.length; j++) {
-				if (array[j] < array[index]) {
-					index = j;
-				}
+				if (array[j] < array[index]) index = j;
 			}
-			int smallerNumber = array[index];
-			array[index] = array[i];
-			array[i] = smallerNumber;
+			swap(array, array[index], array[i]);
 		}
 
 	}
@@ -77,10 +61,9 @@ public class SortServer implements CommandExecutor {
 	private boolean checkSorted(int[] array) {
 		if (array.length <= 1) return true;
 		for (int i = 0; i < array.length - 1; i++) {
-			if (array[i] > (array[i + 1])) {
-				return false;
-			}
+			if (array[i] > (array[i + 1])) return false;
 		}
 		return true;
 	}
 }
+
