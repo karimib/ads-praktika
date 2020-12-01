@@ -5,9 +5,9 @@
  *
  * @author K.Rege
  * @version	1.00 2014/2/3
- * @version	1.01 2016/8/2 
+ * @version	1.01 2016/8/2
  * @version	2.00 2017/8/30 Test
- * @version	2.01 2018/2/5 AutoScale  
+ * @version	2.01 2018/2/5 AutoScale
  * @version	2d.02 2018/2/5 Reconnect (inspired by S. Kunz)
  */
 
@@ -33,7 +33,7 @@ public class ExBoxFrame extends JFrame implements ActionListener, ItemListener {
 	private JCheckBox reconnect;
 	private JComboBox history;
 	private JTextArea output;
-	private JScrollPane scrollPane;	
+	private JScrollPane scrollPane;
 	private CommandExecutor command;
 	private boolean graphicOn;
 	private GraphicPanel graphic;
@@ -52,7 +52,7 @@ public class ExBoxFrame extends JFrame implements ActionListener, ItemListener {
 			}
 		}
 	}
-	
+
 	private void initMenu() {
 		JMenuBar menuBar = new JMenuBar();
 		JMenu menuFile = new JMenu();
@@ -69,7 +69,7 @@ public class ExBoxFrame extends JFrame implements ActionListener, ItemListener {
 
 		menuFile.add(menuFileExit);
 		menuBar.add(menuFile);
-		
+
 		JMenu menuServer = new JMenu("Server");
 		menuBar.add(menuServer);
 		connect = new JMenuItem("Connect");
@@ -78,7 +78,7 @@ public class ExBoxFrame extends JFrame implements ActionListener, ItemListener {
 		test = new JMenuItem("Test");
 		test.addActionListener(this);
 		menuServer.add(test);
-		
+
 		JMenu menuView = new JMenu("View");
 		menuBar.add(menuView);
 		textView = new JMenuItem("Text");
@@ -87,11 +87,11 @@ public class ExBoxFrame extends JFrame implements ActionListener, ItemListener {
 		graphicView = new JMenuItem("Graphic");
 		graphicView.addActionListener(this);
 		menuView.add(graphicView);
-		
+
 		open = new JMenuItem("Open...");
 		open.addActionListener(this);
-		menuFile.insert(open, 0);	
-		setJMenuBar(menuBar);				
+		menuFile.insert(open, 0);
+		setJMenuBar(menuBar);
 	}
 
 	private void initComponents() {
@@ -112,9 +112,9 @@ public class ExBoxFrame extends JFrame implements ActionListener, ItemListener {
 		history = new JComboBox();
 		history.addItemListener(this);
 		panel.add(BorderLayout.SOUTH, history);
-		add(BorderLayout.SOUTH, panel);		
+		add(BorderLayout.SOUTH, panel);
 	}
-	
+
 	/**
 	 * get default path for file open dialog
 	 */
@@ -138,12 +138,12 @@ public class ExBoxFrame extends JFrame implements ActionListener, ItemListener {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (Exception ex) {
 			ex.printStackTrace();
-		}	
+		}
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		if (screenSize.getWidth() > 1920) {
 			SCALE = 2;
 		}
-		setFontSize((int) (11 * SCALE));	
+		setFontSize((int) (11 * SCALE));
 		setSize(new	Dimension((int) (400 * SCALE), (int) (400 * SCALE)));
 		setTitle("ExBox");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -174,7 +174,7 @@ public class ExBoxFrame extends JFrame implements ActionListener, ItemListener {
 			}
 		}
 	}
-	
+
 	private void setGraphicView() {
 		if (graphicOn) {
 			return;
@@ -198,7 +198,7 @@ public class ExBoxFrame extends JFrame implements ActionListener, ItemListener {
 		validate();
 		repaint();
 	}
-	
+
 	private String openFileDialog(String startDirectory, String pattern) {
 		FileDialog	fd = new FileDialog(this, "Open");
 		if (pattern != null) {
@@ -208,30 +208,30 @@ public class ExBoxFrame extends JFrame implements ActionListener, ItemListener {
 			fd.setDirectory(startDirectory);
 		}
 		fd.setVisible(true);
-		return  fd.getDirectory() + fd.getFile();	
+		return  fd.getDirectory() + fd.getFile();
 	}
-	
+
 	private void testCommand() throws Exception {
 		final java.util.List<String> failed = new LinkedList<String>();
 		final java.util.List<String> finished = new LinkedList<String>();
-		
+
 		JUnitCore runner = new JUnitCore();
-		
+
 		String name = openFileDialog(getPathCompiled(), "*Test.class");
 		runner.addListener(new RunListener() {
 			@Override
 			public void testFinished(Description description) throws Exception {
-				finished.add(description.getDisplayName());			
-			}		
+				finished.add(description.getDisplayName());
+			}
 
 			@Override
 			public void testFailure(Failure failure) throws Exception {
 				failed.add(failure.getDescription().getDisplayName());
-			}	
+			}
 		});
 		Class testClass = ServerFactory.loadClass(name);
 		Result result = runner.run(testClass);
-	    
+
 		for (String test : finished) {
 			if (!failed.contains(test)) {
 				output.append(test + ": OK\n");
@@ -247,7 +247,7 @@ public class ExBoxFrame extends JFrame implements ActionListener, ItemListener {
 								: result.getFailures().size() + " ERRORS")
 								+ "\n");
 	}
-	
+
 	private void connectCommand() throws Exception {
 		String name = openFileDialog(getPathCompiled(), "*Server.class");
 		command = ServerFactory.createServer(name);
@@ -255,10 +255,10 @@ public class ExBoxFrame extends JFrame implements ActionListener, ItemListener {
 		String fullClassName = command.getClass().getName();
 		String simpleClassName = fullClassName.substring(
 				fullClassName.lastIndexOf('.') + 1);
-		setTitle("ExBox connected to " + simpleClassName);		
-			
+		setTitle("ExBox connected to " + simpleClassName);
+
 	}
-	
+
 	private void openFile()  throws Exception {
 		String name = openFileDialog(null, null);
 
@@ -270,7 +270,7 @@ public class ExBoxFrame extends JFrame implements ActionListener, ItemListener {
 			b.append(line);
 			b.append('\n');
 		}
-		interpret(b.toString());	
+		interpret(b.toString());
 	}
 
 	public void	itemStateChanged(ItemEvent e) {
@@ -278,8 +278,8 @@ public class ExBoxFrame extends JFrame implements ActionListener, ItemListener {
 			arguments.setText((String) e.getItem());
 			interpret(arguments.getText());
 		} catch (Throwable ex) {
-			error(ex.toString());		
-		}	
+			error(ex.toString());
+		}
 	}
 
 	public void	actionPerformed(ActionEvent	e) {

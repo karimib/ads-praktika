@@ -18,4 +18,4 @@ public class AnyServer implements CommandExecutor {
         result.append("\"\n");
         return result.toString();
     }
-}//AnyServer   
+}//AnyServer

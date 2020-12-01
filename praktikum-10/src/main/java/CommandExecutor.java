@@ -1,12 +1,3 @@
-/**
- * CommandExecutor -- Praktikum Experimentierkasten -- SW3 Dieses Interface muss
- * von jedem Server implementiert werden.
- *
- * @author E. Mumprecht
- * @version 1.0 -- Geruest fuer irgendeinen Server
- * @version 1.1 -- K. Rege Fehlerueckgabe hinzugefuegt
- */
-
 public interface CommandExecutor {
 
     /**
