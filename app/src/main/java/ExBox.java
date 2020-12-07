@@ -3,10 +3,6 @@
  * @version 1.0 -- Experimentierkasten
  */
 
-import java.awt.*;
-import java.io.*;
-import java.awt.event.*;
-
 public class ExBox {
 
     public static void main(String[] args) throws Exception {

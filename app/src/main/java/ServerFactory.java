@@ -6,7 +6,9 @@
  * @version 2.0 -- Dynamisches Nachladen
  */
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.RandomAccessFile;
 
 /* Classloader that handles file path of class
  */
