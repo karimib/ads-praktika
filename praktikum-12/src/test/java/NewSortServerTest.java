@@ -10,6 +10,8 @@ public class NewSortServerTest {
 	String SELECTION = "SELECTION";
 	String BUBBLE = "BUBBLE";
 	String INSERTION = "INSERTION";
+
+	String QUICKER = "QUICKER";
 	int UNSIGNED_RNG = 10000;
 	int SIZE = 10000;
 
@@ -44,6 +46,13 @@ public class NewSortServerTest {
 	}
 
 	@Test
+	public void testSortedQuicker() throws Exception {
+		String quickerInput = addMethod(SELECTION, testData);
+		String result = newSortServer.execute(quickerInput);
+		Assert.assertEquals("true", result);
+	}
+
+	@Test
 	public void multiRun() throws Exception {
 		multiRunComparison();
 	}
@@ -64,19 +73,24 @@ public class NewSortServerTest {
 		String bubbleInput = addMethod(BUBBLE, testData);
 		String insertionInput = addMethod(INSERTION, testData);
 		String selectionInput = addMethod(SELECTION, testData);
+		String quickerInput = addMethod(QUICKER, testData);
 
 		double a = 0;
 		double b = 0;
 		double c = 0;
+		double d = 0;
+
 		int RUNS = 10;
 		for (int i = 0; i < RUNS; i++) {
 			a += measureTime(BUBBLE, bubbleInput, false);
 			b += measureTime(INSERTION, insertionInput, false);
 			c += measureTime(SELECTION, selectionInput, false);
+			d += measureTime(QUICKER, quickerInput, false);
 		}
 		a /= (RUNS * 1000);
 		b /= (RUNS * 1000);
 		c /= (RUNS * 1000);
+		d /= (RUNS * 1000);
 		System.out.println("Runs : " + RUNS + " " + "runs");
 		System.out.println("Data : " + SIZE + " " + "size");
 		System.out.println("Number Range (Unsigned) : " + UNSIGNED_RNG + " " + "range");
@@ -84,6 +98,7 @@ public class NewSortServerTest {
 		System.out.println(BUBBLE + " = " + a + " " + "ms");
 		System.out.println(INSERTION + " = " + b + " " + "ms");
 		System.out.println(SELECTION + " = " + c + " " + "ms");
+		System.out.println(QUICKER + " = " + d + " " + "ms");
 	}
 
 

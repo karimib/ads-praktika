@@ -40,28 +40,49 @@ public class Sorter<T extends Comparable<? super T>> {
 	private <T extends Comparable<? super T>> void sort(T[] data, Procedure procedure, int threshold) {
 		switch (procedure) {
 			case BUBBLE:
-				bubbleSort((T[]) data);
+				bubbleSort( data);
 				break;
 			case INSERTION:
-				insertionSort((T[]) data);
+				insertionSort( data);
 				break;
 			case SELECTION:
-				selectionSort((T[]) data);
+				selectionSort( data);
 				break;
 			case QUICKER:
-				quickerSort((T[]) data, threshold);
+				quickerSort(data, 0, data.length -1, threshold);
 				break;
 		}
 	}
 
-	private <T extends Comparable<? super T>> void quickerSort(T[] data, int threshold) {
+
+
+	private <T extends Comparable<? super T>> void quickerSort(T[] data, int a, int b, int threshold) {
 		if (data.length < threshold) {
 			insertionSort(data);
 		} else {
-
+			quickSort(data, a,b );
 		}
 	}
 
+	private <T extends Comparable<? super T>> void quickSort(T[] array, int a, int b) {
+		if (a < b) {
+			int i = a;
+			int j = b;
+			T x = array[(i + j) / 2];
+			do {
+				while (array[i].compareTo(x) < 0) i++;
+				while (x.compareTo(array[j]) < 0) j--;
+
+				if ( i <= j) {
+					swap(array, i, j);
+					i++;
+					j--;
+				}
+			} while (i <= j);
+			quickSort(array, a, j);
+			quickSort(array, i, b);
+		}
+	}
 
 	private <T extends Comparable<? super T>> void bubbleSort(T[] array) {
 		for (int k = array.length - 1; k > 0; k--) {
