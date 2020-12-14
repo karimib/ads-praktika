@@ -13,3 +13,4 @@ if (praktikaDir.isDirectory()) {
 }
 
 include('app')
+
