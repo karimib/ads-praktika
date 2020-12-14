@@ -1,20 +1,28 @@
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.Assert;
-
 import java.util.Random;
+
 
 public class SortServerTest {
 
-	private static final String SELECTION = "SELECTION";
-	private static final String BUBBLE = "BUBBLE";
-	private static final String INSERTION = "INSERTION";
-	private static final int SIZE = 10000;
+	String SELECTION = "SELECTION";
+	String BUBBLE = "BUBBLE";
+	String INSERTION = "INSERTION";
+	int UNSIGNED_RNG = 1000;
+	int SIZE = 1000;
+
+	String data;
 	SortServer sortServer;
+
+	@Before
+	public void setUp() {
+		sortServer = new SortServer();
+		data = generateRandomData();
+	}
 
 	@Test
 	public void testSortedBubble() throws Exception {
-		sortServer = new SortServer();
-		String data = generateRandomData();
 		String bubbleInput = addMethod(BUBBLE, data);
 		String result = sortServer.execute(bubbleInput);
 		Assert.assertEquals("true", result);
@@ -22,8 +30,6 @@ public class SortServerTest {
 
 	@Test
 	public void testSortedInsertion() throws Exception {
-		sortServer = new SortServer();
-		String data = generateRandomData();
 		String insertionInput = addMethod(INSERTION, data);
 		String result = sortServer.execute(insertionInput);
 		Assert.assertEquals("true", result);
@@ -31,23 +37,47 @@ public class SortServerTest {
 
 	@Test
 	public void testSortedSelection() throws Exception {
-		sortServer = new SortServer();
-		String data = generateRandomData();
 		String selectionInput = addMethod(SELECTION, data);
 		String result = sortServer.execute(selectionInput);
 		Assert.assertEquals("true", result);
 	}
 
 	@Test
-	public void testTime() throws Exception {
-		sortServer = new SortServer();
-		String data = generateRandomData();
+	public void multiRun() throws Exception {
+		multiRunComparison();
+	}
+	private void oneRunComparsion() throws Exception {
 		String bubbleInput = addMethod(BUBBLE, data);
 		String insertionInput = addMethod(INSERTION, data);
 		String selectionInput = addMethod(SELECTION, data);
-		measureTime(BUBBLE, bubbleInput);
-		measureTime(INSERTION, insertionInput);
-		measureTime(SELECTION, selectionInput);
+
+
+		boolean print = true;
+		measureTime(BUBBLE, bubbleInput, print);
+		measureTime(INSERTION, insertionInput, print);
+		measureTime(SELECTION, selectionInput, print);
+	}
+
+	private void multiRunComparison() throws Exception {
+		String bubbleInput = addMethod(BUBBLE, data);
+		String insertionInput = addMethod(INSERTION, data);
+		String selectionInput = addMethod(SELECTION, data);
+
+		double a = 0;
+		double b = 0;
+		double c = 0;
+		int RUNS = 10;
+		for (int i = 0; i < RUNS; i++) {
+			a += measureTime(BUBBLE, bubbleInput, false);
+			b += measureTime(INSERTION, insertionInput, false);
+			c += measureTime(SELECTION, selectionInput, false);
+		}
+		a /= RUNS;
+		b /= RUNS;
+		c /= RUNS;
+		System.out.println(BUBBLE + " = " + a + " " + "ms");
+		System.out.println(INSERTION + " = " + b + " " + "ms");
+		System.out.println(SELECTION + " = " + c + " " + "ms");
 	}
 
 
@@ -55,7 +85,7 @@ public class SortServerTest {
 		Random random = new Random();
 		StringBuffer stringBuffer = new StringBuffer();
 		for (int i = 0; i < SIZE; i++) {
-			stringBuffer.append(random.nextInt(SIZE));
+			stringBuffer.append(random.nextInt(UNSIGNED_RNG));
 			stringBuffer.append("\n");
 		}
 		return stringBuffer.toString();
@@ -69,7 +99,7 @@ public class SortServerTest {
 		return stringBuffer.toString();
 	}
 
-	private void measureTime(String algo, String input) throws Exception {
+	private Double measureTime(String algo, String input, boolean print) {
 		int count = 0;
 		long end, start = System.currentTimeMillis();
 		do {
@@ -77,6 +107,12 @@ public class SortServerTest {
 			end = System.currentTimeMillis();
 			count++;
 		} while (end - start < 1000);
-		System.out.println("algo= " + algo + " " + "time=" + (double) (end - start) / count);
+		{
+			double res = (double) ((end - start) / count);
+			if(print) {
+				System.out.println("algo= " + algo + " " + "time=" + (double) (end - start) / count);
+			}
+			return res;
+		}
 	}
 }
