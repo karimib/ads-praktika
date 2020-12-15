@@ -193,7 +193,7 @@ public class Sorter<T extends Comparable<? super T>> {
 	}
 
 	private <T extends Comparable<? super T>> void insertionSort(T[] array, int low, int high) {
-		for (int j = low; j < high; j++) {
+		for (int j = low + 1; j <= high; j++) {
 			T key = array[j];
 			int i = j - 1;
 			while ((i >= low) && (array[i].compareTo(key) > 0)) {

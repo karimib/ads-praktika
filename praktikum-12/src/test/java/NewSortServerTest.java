@@ -6,7 +6,6 @@ import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static java.lang.System.currentTimeMillis;
 import static java.lang.System.nanoTime;
 
 
@@ -21,7 +20,7 @@ public class NewSortServerTest {
 
 	String QUICKER_PARALLEL = "QUICKER_PARALLEL";
 	int UNSIGNED_RNG = 1000000;
-	int SIZE = 100000;
+	int SIZE = 1000;
 
 	String testData;
 	NewSortServer newSortServer;
@@ -32,14 +31,14 @@ public class NewSortServerTest {
 		testData = generateRandomData(SIZE);
 	}
 
-	//@Test
+	@Test
 	public void testSortedBubble() throws Exception {
 		String bubbleInput = addMethod(BUBBLE, testData);
 		String result = newSortServer.execute(bubbleInput);
 		Assert.assertEquals("true", result);
 	}
 
-	//@Test
+	@Test
 	public void testSortedInsertion() throws Exception {
 		String insertionInput = addMethod(INSERTION, testData);
 		String result = newSortServer.execute(insertionInput);
@@ -76,7 +75,7 @@ public class NewSortServerTest {
 
 	@Test
 	public void multiRunComparison() throws Exception {
-		//String bubbleInput = addMethod(BUBBLE, testData);
+		String bubbleInput = addMethod(BUBBLE, testData);
 		String insertionInput = addMethod(INSERTION, testData);
 		String selectionInput = addMethod(SELECTION, testData);
 		String quickInput = addMethod(QUICK, testData);
