@@ -3,14 +3,13 @@ public class NewSortServer implements CommandExecutor {
 	private String procedure;
 	private Integer[] data;
 
-
 	public String execute(String command) {
 		parseCommand(command);
 
 		sorter = new Sorter<Integer>()
 			.withProcedure(procedure)
-			.withThreshold(50)
-			.sort(data);
+			.withThreshold(50);
+		sorter.sort(data);
 
 		return Boolean.toString(sorter.isSorted(data));
 	}
@@ -23,6 +22,5 @@ public class NewSortServer implements CommandExecutor {
 			data[i - 1] = Integer.valueOf(args[i]);
 		}
 	}
-
 }
 

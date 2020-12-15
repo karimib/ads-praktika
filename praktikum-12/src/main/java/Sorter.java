@@ -1,10 +1,18 @@
 public class Sorter<T extends Comparable<? super T>> {
 
-	private int threshold = 50;
-	private Procedure appliedProcedure;
+	private static final int WORK_THRESHOLD = 50;
+	private int threshold;
+	private Procedure procedure;
+
 
 	enum Procedure {
-		BUBBLE("bubble"), INSERTION("insertion"), SELECTION("selection"), QUICKER("quicker");
+		BUBBLE("bubble"),
+		INSERTION("insertion"),
+		SELECTION("selection"),
+		QUICK("quick"),
+		QUICKER("quicker"),
+		QUICKER_PARALLEL("quicker_parallel");
+
 		private final String type;
 
 		Procedure(String s) {
@@ -21,71 +29,158 @@ public class Sorter<T extends Comparable<? super T>> {
 	}
 
 	public Sorter<T> withProcedure(String procedure) {
-		this.appliedProcedure = Procedure.valueOf(procedure);
+		this.procedure = Procedure.valueOf(procedure);
 		return this;
 	}
 
-	public Sorter<T> sort(T[] data) {
+	public void sort(T[] data) {
 		if (data == null) throw new RuntimeException("data cannot be null");
-		if (appliedProcedure == null) throw new RuntimeException("appliedProcedure cannot be null");
-		sort(data, appliedProcedure, threshold);
-		return this;
+		if (procedure == null) throw new RuntimeException("procedure cannot be null");
+		if (isSorted(data)) throw new RuntimeException("data already sorted");
+		sort(data, procedure);
 	}
 
 	public <T extends Comparable<? super T>> boolean isSorted(T[] data) {
-		if (data != null && checkSorted(data)) return true;
-		return false;
+		return data != null && checkSorted(data);
 	}
 
-	private <T extends Comparable<? super T>> void sort(T[] data, Procedure procedure, int threshold) {
+
+	private <T extends Comparable<? super T>> void sort(T[] data, Procedure procedure) {
 		switch (procedure) {
 			case BUBBLE:
-				bubbleSort( data);
+				bubbleSort(data, 0, data.length - 1);
 				break;
 			case INSERTION:
-				insertionSort( data);
+				insertionSort(data, 0, data.length - 1);
 				break;
 			case SELECTION:
-				selectionSort( data);
+				selectionSort(data, 0, data.length - 1);
+				break;
+			case QUICK:
+				quickSort(data, 0, data.length - 1);
 				break;
 			case QUICKER:
-				quickerSort(data, 0, data.length -1, threshold);
+				quickerSort(data, 0, data.length - 1);
+				break;
+			case QUICKER_PARALLEL:
+				Thread root = new ParallelQuickSort<T>(data, 0, data.length - 1);
+				root.start();
+				try {
+					root.join();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
 				break;
 		}
 	}
 
+	private class ParallelQuickSort<T extends Comparable<? super T>> extends Thread {
+		private final int SPLIT_THRESHOLD = 4096;
+		private final T[] array;
+		private final int low;
+		private final int high;
 
-
-	private <T extends Comparable<? super T>> void quickerSort(T[] data, int a, int b, int threshold) {
-		if (data.length < threshold) {
-			insertionSort(data);
-		} else {
-			quickSort(data, a,b );
+		public ParallelQuickSort(T[] array, int low, int high) {
+			this.array = array;
+			this.low = low;
+			this.high = high;
 		}
-	}
 
-	private <T extends Comparable<? super T>> void quickSort(T[] array, int a, int b) {
-		if (a < b) {
-			int i = a;
-			int j = b;
-			T x = array[(i + j) / 2];
-			do {
-				while (array[i].compareTo(x) < 0) i++;
-				while (x.compareTo(array[j]) < 0) j--;
-
-				if ( i <= j) {
-					swap(array, i, j);
-					i++;
-					j--;
+		@Override
+		public void run() {
+			int mid = 0;
+			Thread t1 = null;
+			Thread t2 = null;
+			if (low < high) {
+				mid = partition(array, low, high);
+				if (mid - low > SPLIT_THRESHOLD) {
+					t1 = new ParallelQuickSort<T>(array, low, mid - 1);
+					t1.start();
+				} else {
+					quickSort(array, low, high);
 				}
-			} while (i <= j);
-			quickSort(array, a, j);
-			quickSort(array, i, b);
+				if (high - mid > SPLIT_THRESHOLD) {
+					t2 = new ParallelQuickSort<T>(array, mid, high);
+					t2.start();
+				} else {
+					quickSort(array, mid, high);
+				}
+				if (t1 != null) {
+					try {
+						t1.join();
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+				if (t2 != null) {
+					try {
+						t2.join();
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}
+
+
+	}
+
+	private <T extends Comparable<? super T>> int partition(T[] array, int left, int right) {
+		T pivot = getMedian(array, left, right);
+		while (left <= right) {
+			while (array[left].compareTo(pivot) < 0) {
+				left++;
+			}
+			while (array[right].compareTo(pivot) > 0) {
+				right--;
+			}
+			if (left <= right) {
+				swap(array, left, right);
+				left++;
+				right--;
+			}
+		}
+		return left;
+	}
+
+	private <T extends Comparable<? super T>> T getMedian(T[] array, int left, int right) {
+		int mid = (left + right) / 2;
+
+		if (array[left].compareTo(array[mid]) > 0)
+			swap(array, left, mid);
+
+		if (array[left].compareTo(array[right]) > 0)
+			swap(array, left, right);
+
+		if (array[mid].compareTo(array[right]) > 0)
+			swap(array, mid, right);
+
+		swap(array, mid, right);
+		return array[right];
+	}
+
+	private <T extends Comparable<? super T>> void quickerSort(T[] array, int low, int high) {
+		if (low < high) {
+			if (high - low < WORK_THRESHOLD) {
+				insertionSort(array, low, high);
+			} else {
+				int mid = partition(array, low, high);
+				quickSort(array, low, mid - 1);
+				quickSort(array, mid, high);
+			}
 		}
 	}
 
-	private <T extends Comparable<? super T>> void bubbleSort(T[] array) {
-		for (int k = array.length - 1; k > 0; k--) {
+	private <T extends Comparable<? super T>> void quickSort(T[] array, int low, int high) {
+		if (low < high) {
+			int mid = partition(array, low, high);
+			quickSort(array, low, mid - 1);
+			quickSort(array, mid, high);
+		}
+	}
+
+	private <T extends Comparable<? super T>> void bubbleSort(T[] array, int low, int high) {
+		for (int k = high; k > low; k--) {
 			boolean noSwap = true;
 			for (int i = 0; i < k; i++) {
 				if (array[i].compareTo(array[i + 1]) > 0) {
@@ -97,12 +192,11 @@ public class Sorter<T extends Comparable<? super T>> {
 		}
 	}
 
-	private <T extends Comparable<? super T>> void insertionSort(T[] array) {
-		int n = array.length;
-		for (int j = 1; j < n; j++) {
+	private <T extends Comparable<? super T>> void insertionSort(T[] array, int low, int high) {
+		for (int j = low; j < high; j++) {
 			T key = array[j];
 			int i = j - 1;
-			while ((i > -1) && (array[i].compareTo(key) > 0)) {
+			while ((i >= low) && (array[i].compareTo(key) > 0)) {
 				array[i + 1] = array[i];
 				i--;
 			}
@@ -110,11 +204,13 @@ public class Sorter<T extends Comparable<? super T>> {
 		}
 	}
 
-	private <T extends Comparable<? super T>> void selectionSort(T[] array) {
-		for (int i = 0; i < array.length - 1; i++) {
+	private <T extends Comparable<? super T>> void selectionSort(T[] array, int low, int high) {
+		for (int i = low; i < high; i++) {
 			int index = i;
 			for (int j = i + 1; j < array.length; j++) {
-				if (array[j].compareTo(array[index]) < 0) index = j;
+				if (array[j].compareTo(array[index]) < 0) {
+					index = j;
+				}
 			}
 			swap(array, index, i);
 		}
