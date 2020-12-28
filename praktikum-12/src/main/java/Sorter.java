@@ -18,6 +18,10 @@ public class Sorter<T extends Comparable<? super T>> {
 		Procedure(String s) {
 			this.type = s.toLowerCase();
 		}
+
+		public String getType() {
+			return type;
+		}
 	}
 
 	public Sorter() {
@@ -128,10 +132,10 @@ public class Sorter<T extends Comparable<? super T>> {
 	private <T extends Comparable<? super T>> int partition(T[] array, int left, int right) {
 		T pivot = getMedian(array, left, right);
 		while (left <= right) {
-			while (array[left].compareTo(pivot) < 0) {
+			while (array[left].compareTo(pivot) <= -1) {
 				left++;
 			}
-			while (array[right].compareTo(pivot) > 0) {
+			while (array[right].compareTo(pivot) >= 1) {
 				right--;
 			}
 			if (left <= right) {
@@ -146,13 +150,13 @@ public class Sorter<T extends Comparable<? super T>> {
 	private <T extends Comparable<? super T>> T getMedian(T[] array, int left, int right) {
 		int mid = (left + right) / 2;
 
-		if (array[left].compareTo(array[mid]) > 0)
+		if (array[left].compareTo(array[mid]) >= 1)
 			swap(array, left, mid);
 
-		if (array[left].compareTo(array[right]) > 0)
+		if (array[left].compareTo(array[right]) >= 1)
 			swap(array, left, right);
 
-		if (array[mid].compareTo(array[right]) > 0)
+		if (array[mid].compareTo(array[right]) >= 1)
 			swap(array, mid, right);
 
 		swap(array, mid, right);
@@ -183,7 +187,7 @@ public class Sorter<T extends Comparable<? super T>> {
 		for (int k = high; k > low; k--) {
 			boolean noSwap = true;
 			for (int i = 0; i < k; i++) {
-				if (array[i].compareTo(array[i + 1]) > 0) {
+				if (array[i].compareTo(array[i + 1]) >= 1) {
 					swap(array, i, i + 1);
 					noSwap = false;
 				}
@@ -196,7 +200,7 @@ public class Sorter<T extends Comparable<? super T>> {
 		for (int j = low + 1; j <= high; j++) {
 			T key = array[j];
 			int i = j - 1;
-			while ((i >= low) && (array[i].compareTo(key) > 0)) {
+			while ((i >= low) && (array[i].compareTo(key) >= 1)) {
 				array[i + 1] = array[i];
 				i--;
 			}
@@ -208,7 +212,7 @@ public class Sorter<T extends Comparable<? super T>> {
 		for (int i = low; i < high; i++) {
 			int index = i;
 			for (int j = i + 1; j < array.length; j++) {
-				if (array[j].compareTo(array[index]) < 0) {
+				if (array[j].compareTo(array[index]) <= -1) {
 					index = j;
 				}
 			}
@@ -218,7 +222,7 @@ public class Sorter<T extends Comparable<? super T>> {
 	}
 
 	private <T extends Comparable<? super T>> void swap(T[] array, int i, int j) {
-		T h = array[i];
+		final T h = array[i];
 		array[i] = array[j];
 		array[j] = h;
 	}
@@ -227,7 +231,7 @@ public class Sorter<T extends Comparable<? super T>> {
 		if (array == null) return false;
 		if (array.length <= 1) return true;
 		for (int i = 0; i < array.length - 1; i++) {
-			if (array[i].compareTo(array[i + 1]) > 0) return false;
+			if (array[i].compareTo(array[i + 1]) >= 1) return false;
 		}
 		return true;
 	}

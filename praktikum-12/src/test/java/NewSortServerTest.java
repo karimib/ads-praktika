@@ -96,39 +96,50 @@ public class NewSortServerTest {
 		double avgE = 0;
 		double avgF = 0;
 
+		long end, start = nanoTime();
 		for (int i = 0; i < RUNS; i++) {
-			System.out.println("*******************************RUN " + i + "****************************************");
-			//a += measureTime(BUBBLE, bubbleInput, true);
-			//b += measureTime(INSERTION, insertionInput, true);
+			System.out.println("RUN " + i + "--------------------------------------");
+			a += measureTime(BUBBLE, bubbleInput, true);
+			b += measureTime(INSERTION, insertionInput, true);
 			c += measureTime(SELECTION, selectionInput, true);
 			d += measureTime(QUICK, quickerInput, true);
 			e += measureTime(QUICKER, quickerInput, true);
 			f += measureTime(QUICKER_PARALLEL, parallelQuickerInput, true);
+			System.out.println();
 		}
+		end = nanoTime();
 
-		//avgA = a / RUNS;
+
+		avgA = a / RUNS;
 		avgB = b / RUNS;
 		avgC = c / RUNS;
 		avgD = d / RUNS;
 		avgE = e / RUNS;
 		avgF = f / RUNS;
-		double total = a + b + c + d + e + f;
-		System.out.println("***********************************RESULT**************************************");
-		System.out.println("Runs : " + RUNS + " " + "runs");
-		System.out.println("Data : " + SIZE + " " + "size");
-		System.out.println("Number Range (Unsigned) : " + UNSIGNED_RNG + " " + "range");
-		System.out.println("Parallelism : " + Runtime.getRuntime().availableProcessors());
-		System.out.println("***************************AVERAGE TIME PER RUN********************************");
-		//System.out.println(BUBBLE + " = " + a + " " + "ms" + "| " + " avg : " + avgA + " " + "ms");
-		System.out.println(INSERTION + " = " + b + " " + "ms" + "| " + " avg :" + avgB + " " + "ms");
-		System.out.println(SELECTION + " = " + c + " " + "ms" + "| " + " avg :" + avgC + " " + "ms");
-		System.out.println(QUICK + " = " + d + " " + "ms" + "| " + " avg :" + avgD + " " + "ms");
-		System.out.println(QUICKER + " = " + e + " " + "ms" + "| " + " avg :" + avgE + " " + "ms");
-		System.out.println(QUICKER_PARALLEL + " = " + f + " " + "ms" + "| " + " avg :" + avgF + " " + "ms");
-		System.out.println("Total time : " + total + " " + "ms");
-		System.out.println("*******************************************************************************");
+
+		System.out.println("SUMMARY");
+		System.out.println("No. Runs : " + RUNS);
+		System.out.println("Data Size : " + SIZE);
+		System.out.println("Number Range (Unsigned) : " + "[0 -" + UNSIGNED_RNG + "]");
+		System.out.println("Cores : " + Runtime.getRuntime().availableProcessors());
+		System.out.println();
+		System.out.println("STATISTICS");
+		System.out.println(summary(BUBBLE, a, avgA));
+		System.out.println(summary(INSERTION, b, avgB));
+		System.out.println(summary(SELECTION, c, avgC));
+		System.out.println(summary(QUICK, d, avgD));
+		System.out.println(summary(QUICKER, e, avgE));
+		System.out.println(summary(QUICKER_PARALLEL, f, avgF));
+
+		long total = end - start;
+		total /= 1000000;
+		System.out.println("Total execution time : " + total + " " + "ms");
 	}
 
+
+	private String summary(String procedure, double total, double avg) {
+		return procedure + "\n" + "Total : " + total + " " + "ms" + "\n" + "Avg : " + avg + " " + "ms";
+	}
 
 	private String generateRandomData(int size) {
 		Random random = new Random();
